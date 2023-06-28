@@ -5,6 +5,9 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
 const mongoose = require("mongoose");
+require('dotenv').config();
+const MYUSER = process.env.USER;
+const MYPASS = process.env.PASS;
 
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -20,8 +23,19 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+// const uri =
+//   "mongodb+srv://" +
+//   MYUSER +
+//   ":" +
+//   MYPASS +
+//   "@blogdb.46fevwc.mongodb.net/?retryWrites=true&w=majority";
+
 mongoose.set('strictQuery', false );
-mongoose,mongoose.connect('mongodb://127.0.0.1:27017/blogDB' ,{ useNewUrlParser: true ,} );
+mongoose,
+  mongoose.connect(
+    "mongodb+srv://"+MYUSER+":"+MYPASS+"@cluster0.z12ksae.mongodb.net/?retryWrites=true&w=majority",
+    { useNewUrlParser: true }
+  );
 
 const postSchema = {
 title: String,
@@ -41,12 +55,12 @@ app.get("/", function(req, res) {
     });
 });
 
-app.get( "/alumni" , function(req , res){
-    res.render("alumni" , {aboutContent: aboutContent})
+app.get( "/about" , function(req , res){
+    res.render("about" , {aboutContent: aboutContent})
 });
 
-app.get( "/mocks" , function(req , res){
-    res.render("mocks" , {contact: contactContent})
+app.get( "/contact" , function(req , res){
+    res.render("contact" , {contact: contactContent})
 });
 
 app.get( "/random" , function(req , res){
